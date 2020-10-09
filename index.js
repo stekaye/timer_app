@@ -1,33 +1,27 @@
-class Timer {
-  constructor (durationInput, startButton, pauseButton) {
-    //This enables other methods to use them.
-    this.durationInput = durationInput;
-    this.startButton = startButton;
-    this.pauseButton = pauseButton;
-
-    //automatically set up event listener on each new timer instance for whatever is defined as the start button.
-    this.startButton.addEventListener('click', this.start);
-    this.pauseButton.addEventListener('click', this.pause);
-  }
-
-  //Define start method with an arroq function. This will ensure that the value of this is equal to Timer. Otherwise, it would refer to the button. Option two would be to add .bind(this) after this.start above.
-  start = () => {
-    this.tick();
-    //When we call setInterval we get back something called a timer(an ID). We assign it to an instance variable (THIS enables us to share information between different methods). To stop the interval, we later call clearInterval(id);
-    this.interval = setInterval(this.tick, 1000);
-  }
-
-  tick = () => {
-    console.log('tick')
-  }
-
-  pause = () => {
-    clearInterval(this.interval);
-  }
-}
 
 const durationInput = document.querySelector('#duration');
 const startButton = document.querySelector('#start');
 const pauseButton = document.querySelector('#pause');
+const circle = document.querySelector('circle');
 
-const timer = new Timer(durationInput, startButton, pauseButton);
+const perimeter = circle.getAttribute('r') * 2 * Math.PI;
+circle.setAttribute('stroke-dasharray', perimeter);
+
+//To avoid mixing our timer logic with the logic responsible for updating our border, we need a way of connecting our timer code with the outside world so we can communicate that key events have happened (time has started, paused, completed). We are going to do that through callback functions.
+
+// 1. Constructor function needs to receive each callback.
+
+let currentOffset = 0;
+
+const timer = new Timer(durationInput, startButton, pauseButton, {
+  onStart() {
+
+  },
+  onTick() {
+    circle.setAttribute('stroke-dashoffset', currentOffset);
+    currentOffset = currentOffset - 50;
+  }, 
+  onComplete() {
+
+  }
+});
