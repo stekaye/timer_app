@@ -1,0 +1,71 @@
+body {
+  background: #536976; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #536976, #292e49); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #536976, #292e49);
+  font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans',
+    'Droid Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  height: 100vh;
+  position: relative;
+}
+
+* {
+  font: inherit;
+}
+
+.dial {
+  height: 400px;
+  width: 400px;
+}
+
+.timer {
+  position: absolute;
+  display: inline-block;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.timer input {
+  display: block;
+  border: none;
+  width: 240px;
+  font-size: 90px;
+  text-align: center;
+}
+
+.timer button {
+  background: transparent;
+  border: none;
+  font-size: 36px;
+  cursor: pointer;
+}
+
+.timer button i {
+  color: #ffd369;
+  font-size: 3rem;
+}
+
+.timer button:focus {
+  outline: none;
+}
+
+.timer input:focus {
+  outline: none;
+}
+
+.controls {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#duration {
+  background: transparent;
+  color: #ffd369;
+}
