@@ -9,7 +9,7 @@ class Timer {
     if (callbacks) {
       this.onStart = callbacks.onStart;
       this.onTick = callbacks.onTick;
-      this.onPause = callbacks.onComplete;
+      this.onComplete = callbacks.onComplete;
     } 
 
     //automatically set up event listener on each new timer instance for whatever is defined as the start button.
@@ -22,30 +22,34 @@ class Timer {
     //Check first to see if there is an onStart callback.
     if (this.onStart) {
       //Communicates that timer has started to outside world!
-      this.onStart();
+      //Pass in timeRemaining so we can use the starting time later.
+      this.onStart(this.timeRemaining);
     }
 
     this.tick();
     //When we call setInterval we get back something called a timer(an ID). We assign it to an instance variable (THIS enables us to share information between different methods). To stop the interval, we later call clearInterval(id);
-    this.interval = setInterval(this.tick, 1000);
-  }
+
+    //Run every 50ms. Below in tick() minus .05.
+    this.interval = setInterval(this.tick, 20);
+  };
 
   pause = () => {
     clearInterval(this.interval);
-  }
+  };
 
   tick = () => {
     //Getters and setters allow you to use them like variables, without needing the function parentheses. Add logic to stop timer if time reaches 0 so it does not continue to negative.
     
     if (this.timeRemaining <= 0) {
-      this.pause
+      this.pause();
       if (this.onComplete) {
         this.onComplete();
       }
     } else {
-      this.timeRemaining = this.timeRemaining - 1;
+      this.timeRemaining = this.timeRemaining - 0.02;
       if (this.onTick) {
-        this.onTick();
+        //Pass in this.timeRemaining so we can use it in index.js.
+        this.onTick(this.timeRemaining);
       }
     }
   }
@@ -57,7 +61,8 @@ class Timer {
   }
 
   set timeRemaining(time) {
-    this.durationInput.value = time;
+    //Round decimals to two places;
+    this.durationInput.value = time.toFixed(2);
   }
   
 }

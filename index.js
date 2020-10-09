@@ -11,17 +11,19 @@ circle.setAttribute('stroke-dasharray', perimeter);
 
 // 1. Constructor function needs to receive each callback.
 
-let currentOffset = 0;
-
+let duration;
 const timer = new Timer(durationInput, startButton, pauseButton, {
-  onStart() {
-
+  onStart(totalDuration) {
+    duration = totalDuration;
   },
-  onTick() {
-    circle.setAttribute('stroke-dashoffset', currentOffset);
-    currentOffset = currentOffset - 50;
-  }, 
-  onComplete() {
 
+  onTick(timeRemaining) {
+    circle.setAttribute('stroke-dashoffset', 
+      (perimeter * timeRemaining) / duration - perimeter
+    );
+  }, 
+
+  onComplete() {
+    console.log('Timer is completed');
   }
 });
